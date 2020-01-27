@@ -1,4 +1,5 @@
 ## Install
+* npx react-native init "ProjectName"
 * npm i react-native-camera
 * npm i react-native-qrcode-scanner
 * npx react-native link react-native-camera (May not need)
