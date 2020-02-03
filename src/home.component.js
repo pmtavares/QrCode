@@ -1,26 +1,22 @@
-import React, { Component, Fragment }  from 'react'
+import React, { useState, Fragment }  from 'react'
 import {View, Text, StatusBar, TouchableOpacity, Linking} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import styles from './styles'
 
-class  Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            scan: false,
-            ScanResult: false,
-            result: null
-        };
-    }
 
-    onSuccess = (e) => {
+const Home = () =>  {
+    const [scan, setScan] = useState(false);
+    const [scanResult, setScanResult] = useState(false);
+    const [result, setResult] = useState(null);  
+
+    
+    const onSuccess = (e) => {
         const check = e.data.substring(0, 4);
         console.log('scanned data' + check);
-        this.setState({
-            result: e,
-            scan: false,
-            ScanResult: true
-        })
+        setResult(e);
+        setScan(false);
+        setScanResult(true);
+
         if (check === 'http') {
             Linking
                 .openURL(e.data)
@@ -28,55 +24,58 @@ class  Home extends Component {
 
 
         } else {
-            this.setState({
-                result: e,
-                scan: false,
-                ScanResult: true
-            })
+            setResult(e);
+            setScan(false);
+            setScanResult(true);
+            
         }
 
     }
 
-    activeQR = () => {
-        this.setState({
-            scan: true
-        })
+    const activeQR = () => {
+        setScan(true);
+        
     }
-    scanAgain = () => {
-        this.setState({
-            scan: true,
-            ScanResult: false
-        })
+    const scanAgain = () => {
+        setScan(true);
+        setScanResult(false);
+        
     }
 
-    render(){
-        const { scan, ScanResult, result } = this.state;
+    let scanner;
+
+    const startScan = () => {
+      if (scanner) {
+        scanner._setScanning(false);
+      }
+    }
+
+       // const { scan, ScanResult, result } = this.state;
         const desccription = 'QR code App that I created for testing purposes @Pedro.'
         
-        return (
-            
+        return (            
             <View style={styles.scrollViewStyle}>
             <Fragment>
                 <StatusBar barStyle="dark-content" />
                 <Text style={styles.textTitle}>My React-Native QR Code !</Text>
-                {!scan && !ScanResult &&
+                {!scan && !scanResult &&
                     <View style={styles.cardView} >
                         <Text numberOfLines={8} style={styles.descText}>{desccription}</Text>
-                        <TouchableOpacity onPress={this.activeQR} style={styles.buttonTouchable}>
+                        <TouchableOpacity onPress={() => activeQR()} style={styles.buttonTouchable}>
                             <Text style={styles.buttonTextStyle}>Click to Scan !</Text>
                         </TouchableOpacity>
 
                     </View>
                 }
 
-                {ScanResult &&
+                {scanResult &&
                     <Fragment>
                         <Text style={styles.textTitle1}>Result !</Text>
-                        <View style={ScanResult ? styles.scanCardView : styles.cardView}>
+                        <View style={scanResult ? styles.scanCardView : styles.cardView}>
                             <Text>Type : {result.type}</Text>
                             <Text>Result : {result.data}</Text>
                             <Text numberOfLines={1}>RawData: {result.rawData}</Text>
-                            <TouchableOpacity onPress={this.scanAgain} style={styles.buttonTouchable}>
+                            <TouchableOpacity onPress={()=>scanAgain()} style={styles.buttonTouchable}>
                                 <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
                             </TouchableOpacity>
 
@@ -89,8 +88,8 @@ class  Home extends Component {
                     <QRCodeScanner
                         reactivate={true}
                         showMarker={true}
-                        ref={(node) => { this.scanner = node }}
-                        onRead={this.onSuccess}
+                        ref={(node) => { node }}
+                        onRead={(e) => onSuccess(e)}
                         topContent={
                             <Text style={styles.centerText}>
                                 Go to wikipedia.org/wiki/QR_code</Text>
@@ -99,10 +98,10 @@ class  Home extends Component {
                         markerStyle={{borderWidth:5, borderColor:'red'}}
                         bottomContent={
                             <View>                              
-                                <TouchableOpacity style={styles.buttonTouchable} onPress={() => this.scanner.reactivate()}>
+                                <TouchableOpacity style={styles.buttonTouchable} onPress={() => startScan()}>
                                         <Text style={styles.buttonTextStyle}>OK. Got it!</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.buttonTouchable} onPress={() => this.setState({ scan: false })}>
+                                <TouchableOpacity style={styles.buttonTouchable} onPress={() => setScan(false)}>
                                     <Text style={styles.buttonTextStyle}>Stop Scan</Text>
                                 </TouchableOpacity>
                             </View>
@@ -113,8 +112,8 @@ class  Home extends Component {
             </Fragment>
         </View>
         )
-    }
+    
 };
 
-
 export default Home;
+
