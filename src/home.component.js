@@ -92,9 +92,11 @@ class  Home extends Component {
                         ref={(node) => { this.scanner = node }}
                         onRead={this.onSuccess}
                         topContent={
-
+                            <Text style={styles.centerText}>
+                                Go to wikipedia.org/wiki/QR_code</Text>
                         }
-                        cameraStyle={{height: 160}}
+                        cameraStyle={{height: 150, width:280, alignSelf: 'center'}}
+                        markerStyle={{borderWidth:5, borderColor:'red'}}
                         bottomContent={
                             <View>                              
                                 <TouchableOpacity style={styles.buttonTouchable} onPress={() => this.scanner.reactivate()}>

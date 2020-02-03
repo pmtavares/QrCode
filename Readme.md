@@ -7,10 +7,10 @@
 
 Need to edit AndroidManifest.xml to add the following:
  
-##### uses-permission android:name="android.permission.CAMERA" />
+##### <uses-permission android:name="android.permission.CAMERA" />
 
-##### uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+##### <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-##### uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
+##### <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
 
-##### uses-permission android:name="android.permission.VIBRATE"/>
+##### <uses-permission android:name="android.permission.VIBRATE"/>

@@ -25,7 +25,7 @@ const styles = {
     },
     cardView: {
         width: deviceWidth - 32,
-        height: deviceHeight / 3,
+        height: deviceHeight / 2,
         alignSelf: 'center',
         justifyContent: 'flex-start',
         alignItems: 'center',
@@ -45,7 +45,7 @@ const styles = {
     },
     scanCardView: {
         width: deviceWidth - 80,
-        height: deviceHeight / 8,
+        height: deviceHeight / 2,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
